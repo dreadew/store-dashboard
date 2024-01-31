@@ -14,8 +14,10 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { CardWrapper } from './card-wrapper'
+import { useRouter } from 'next/navigation'
 
 export const SignUpForm = () => {
+	const router = useRouter()
 	const [isPending, startTransition] = useTransition()
 	const [error, setError] = useState<string | undefined>()
 	const [success, setSuccess] = useState<string | undefined>()
