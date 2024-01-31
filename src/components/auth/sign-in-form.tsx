@@ -4,9 +4,10 @@ import * as z from 'zod'
 
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState, useTransition } from 'react'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import { signIn } from '../../../actions/sign-in'
 import { SignInSchema } from '../../../schemas'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
@@ -19,6 +20,14 @@ export const SignInForm = () => {
 	const [isPending, startTransition] = useTransition()
 	const [error, setError] = useState<string | undefined>()
 	const [success, setSuccess] = useState<string | undefined>()
+	const session = useSession()
+	const router = useRouter()
+
+	useEffect(() => {
+		if (session?.status === 'authenticated') {
+			router.push('/')
+		}
+	}, [session?.status, router])
 
 	const {
 		handleSubmit,
@@ -37,9 +46,18 @@ export const SignInForm = () => {
 		setSuccess('')
 
 		startTransition(() => {
-			signIn(values).then(data => {
-				setError(data.error)
-				setSuccess(data.success)
+			signIn('credentials', {
+				...values,
+				redirect: false,
+			}).then(callback => {
+				if (callback?.error) {
+					console.error('Неправильный логин или пароль')
+				}
+
+				if (callback?.ok && !callback?.error) {
+					console.log('Вы успешно авторизовались')
+					router.push('/')
+				}
 			})
 		})
 	}

@@ -16,7 +16,7 @@ export const SignInButton = ({
 	const router = useRouter()
 
 	const onClick = () => {
-		router.push('/auth/sign-in')
+		router.push('/api/auth/sign-in')
 	}
 
 	if (mode === 'modal') {

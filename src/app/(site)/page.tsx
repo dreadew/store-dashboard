@@ -1,7 +1,14 @@
+'use client'
+
 import { SignInButton } from '@/components/auth/sign-in-button'
 import { Button } from '@/components/ui/button'
+import { useSession } from 'next-auth/react'
 
 export default function Home() {
+	const { data: session } = useSession()
+
+	console.log(session)
+
 	return (
 		<main className='flex h-full flex-col items-center justify-center'>
 			<div className='space-y-2'>
