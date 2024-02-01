@@ -59,7 +59,7 @@ export const authOptions = {
 		},
 		session: async ({ session, token }: { session: Session; token: any }) => {
 			try {
-				const userDB = await axios.post('http://localhost:3030/login/user', {
+				const userDB = await axios.post('http://localhost:3030/users/me', {
 					token: token.jwt,
 				})
 				if (userDB) {

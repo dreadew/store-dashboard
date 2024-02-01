@@ -2,26 +2,26 @@
 
 import { useRouter } from 'next/navigation'
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
-import { SignInForm } from './sign-in-form'
 import { cn } from '@/lib/utils'
+import { SignUpForm } from './sign-up-form'
 
-interface SignInButtonProps {
+interface SignUpButtonProps {
 	children: React.ReactNode
 	className?: string
 	mode?: 'modal' | 'redirect'
 	asChild?: boolean
 }
 
-export const SignInButton = ({
+export const SignUpButton = ({
 	children,
 	className,
 	mode = 'redirect',
 	asChild,
-}: SignInButtonProps) => {
+}: SignUpButtonProps) => {
 	const router = useRouter()
 
 	const onClick = () => {
-		router.push('/auth/sign-in')
+		router.push('/auth/sign-up')
 	}
 
 	if (mode === 'modal') {
@@ -29,7 +29,7 @@ export const SignInButton = ({
 			<Dialog>
 				<DialogTrigger asChild={asChild}>{children}</DialogTrigger>
 				<DialogContent className='mt-2 w-auto p-0 border-none'>
-					<SignInForm />
+					<SignUpForm />
 				</DialogContent>
 			</Dialog>
 		)

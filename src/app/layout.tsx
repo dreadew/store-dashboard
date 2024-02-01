@@ -2,6 +2,8 @@ import { SessionProviders } from '@/components/session-provider'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
+import { ModalProvider } from '../../providers/modal-provider'
+import { MainNavbar } from '@/components/main-navbar'
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -9,8 +11,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-	title: 'Dreadew',
-	description: 'Some description...',
+	title: 'dreadew',
+	description: 'some description...',
 }
 
 export default function RootLayout({
@@ -21,7 +23,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={poppins.className}>
-				<SessionProviders>{children}</SessionProviders>
+				<SessionProviders>
+					{/*<ModalProvider />*/}
+					{children}
+				</SessionProviders>
 			</body>
 		</html>
 	)

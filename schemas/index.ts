@@ -20,3 +20,9 @@ export const SignUpSchema = z.object({
 		message: 'username must be at least 6 characters',
 	}),
 })
+
+export const createStoreSchema = z.object({
+	name: z.string().min(4, {
+		message: 'store must be at least 4 characters'
+	})
+})
