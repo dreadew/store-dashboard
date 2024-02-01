@@ -1,6 +1,9 @@
 'use client'
 
+import { DialogContent, DialogTrigger } from '@radix-ui/react-dialog'
 import { useRouter } from 'next/navigation'
+import { Dialog } from '../ui/dialog'
+import { SignInForm } from './sign-in-form'
 
 interface SignInButtonProps {
 	children: React.ReactNode
@@ -16,11 +19,18 @@ export const SignInButton = ({
 	const router = useRouter()
 
 	const onClick = () => {
-		router.push('/api/auth/sign-in')
+		router.push('/auth/sign-in')
 	}
 
 	if (mode === 'modal') {
-		return <span>TODO: Implement modal</span>
+		return (
+			<Dialog>
+				<DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+				<DialogContent className='mt-2 w-auto p-0 border-none'>
+					<SignInForm />
+				</DialogContent>
+			</Dialog>
+		)
 	}
 
 	return (

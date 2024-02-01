@@ -51,11 +51,11 @@ export const SignInForm = () => {
 				redirect: false,
 			}).then(callback => {
 				if (callback?.error) {
-					console.error('Неправильный логин или пароль')
+					setError('неправильный логин или пароль')
 				}
 
 				if (callback?.ok && !callback?.error) {
-					console.log('Вы успешно авторизовались')
+					setSuccess('вы успешно авторизовались')
 					router.push('/')
 				}
 			})

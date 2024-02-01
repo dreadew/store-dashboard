@@ -1,7 +1,3 @@
 export default function DashboardPage() {
-	return (
-		<main>
-			>> it's dashboard page
-		</main>
-	)
+	return <main>it's dashboard page</main>
 }

@@ -4,6 +4,7 @@ import * as z from 'zod'
 
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { signUp } from '../../../actions/sign-up'
@@ -14,7 +15,6 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { CardWrapper } from './card-wrapper'
-import { useRouter } from 'next/navigation'
 
 export const SignUpForm = () => {
 	const router = useRouter()
@@ -40,9 +40,12 @@ export const SignUpForm = () => {
 		setSuccess('')
 
 		startTransition(() => {
-			signUp(values).then(data => {
-				setError(data.error)
-				setSuccess(data.success)
+			signUp(values).then(callback => {
+				setError(callback.error)
+				setSuccess(callback.success)
+				if (!callback.error) {
+					router.push('/auth/sign-in')
+				}
 			})
 		})
 	}

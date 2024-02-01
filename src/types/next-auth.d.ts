@@ -1,17 +1,22 @@
 import 'next-auth'
 
 declare module 'next-auth' {
+	interface User {
+		email: string
+		username: string
+		is_active: boolean
+		email_verified: boolean
+		jwt: string
+	}
+
 	interface Session {
 		user: {
-			user_id: number
+			id: number
 			username: string
 			email: string
 			is_active: boolean
 			email_verified: boolean
-		}
-
-		backendTokens: {
-			accessToken: string
+			jwt: string
 		}
 	}
 }
