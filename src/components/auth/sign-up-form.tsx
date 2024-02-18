@@ -15,16 +15,12 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { CardWrapper } from './card-wrapper'
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
-import { Captcha } from '../captcha'
 
 export const SignUpForm = () => {
 	const router = useRouter()
 	const [isPending, startTransition] = useTransition()
 	const [error, setError] = useState<string | undefined>()
 	const [success, setSuccess] = useState<string | undefined>()
-	const [open, setOpen] = useState<boolean>(false)
-	const [verified, setVerified] = useState<boolean>(false)
 
 	const {
 		handleSubmit,
@@ -40,30 +36,22 @@ export const SignUpForm = () => {
 	})
 
 	const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
-		if (!verified) {
-			setError('сначала пройдите каптчу')
-			return
-		}
-
 		setError('')
 		setSuccess('')
 
 		startTransition(() => {
 			signUp(values).then(callback => {
-				setError(callback.error)
-				setSuccess(callback.success)
-				if (!callback.error) {
+				if (!callback) {
 					router.push('/auth/sign-in')
 				}
 			})
 		})
-		setVerified(false)
 	}
 
 	return (
 		<CardWrapper
-			headerLabel='create an account'
-			backButtonLabel='already have an account?'
+			headerLabel='создать аккаунт'
+			backButtonLabel='у вас уже есть аккаунт?'
 			backButtonHref='/auth/sign-in'
 		>
 			<form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +62,7 @@ export const SignUpForm = () => {
 								errors.username ? 'text-destructive' : 'text-grey-700'
 							)}
 						>
-							username
+							никнейм
 						</Label>
 						<Input
 							type='username'
@@ -95,7 +83,7 @@ export const SignUpForm = () => {
 								errors.email ? 'text-destructive' : 'text-grey-700'
 							)}
 						>
-							email
+							эл. почта
 						</Label>
 						<Input
 							type='email'
@@ -116,7 +104,7 @@ export const SignUpForm = () => {
 								errors.password ? 'text-destructive' : 'text-grey-700'
 							)}
 						>
-							password
+							пароль
 						</Label>
 						<Input
 							type='password'
@@ -132,22 +120,10 @@ export const SignUpForm = () => {
 						)}
 					</div>
 				</div>
-				{
-					verified ? (
-						<p className='p-3 bg-emerald-500/15 text-emerald-500 rounded-lg flex text-sm justify-between items-center'>каптча пройдена<span>&#10003;</span></p>
-					) : (
-						<Dialog open={open} onOpenChange={setOpen}>
-							<DialogTrigger className='h-10 w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground'>open captcha</DialogTrigger>
-							<DialogContent className='rounded-lg'>
-								<Captcha verified={verified} setOpen={setOpen} setVerified={setVerified} />
-							</DialogContent>
-					</Dialog>
-					)
-				}
 				<FormError message={error} />
 				<FormSuccess message={success} />
-				<Button type='submit' className='w-full' disabled={isPending || !verified}>
-					sign up
+				<Button type='submit' className='w-full'>
+					зарегистрироваться
 				</Button>
 			</form>
 		</CardWrapper>

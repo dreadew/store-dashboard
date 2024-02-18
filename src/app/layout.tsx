@@ -1,11 +1,9 @@
 import { SessionProviders } from '@/components/session-provider'
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
-import { ModalProvider } from '../../providers/modal-provider'
-import { MainNavbar } from '@/components/main-navbar'
 
-const poppins = Poppins({
+const poppins = Inter({
 	subsets: ['latin'],
 	weight: ['300', '400', '500', '600'],
 })

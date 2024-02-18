@@ -1,69 +1,62 @@
+import { useSession } from 'next-auth/react'
 import { useParams, usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { useStoreModal } from '../../hooks/use-store-modal'
+import { DeleteStoreDialog } from './delete-store-dialog'
 import { StoreSwitcher } from './store-switcher'
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { Button } from './ui/button'
+import { ChangeStoreDialog } from './update-store-dialog'
 
-interface StoresNavbarProps {
-	navX?: number
-}
-
-export const StoresNavbar = ({navX}: StoresNavbarProps) => {
+export const StoresNavbar = () => {
 	const pathname = usePathname()
+	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [changeOpen, setChangeOpen] = useState<boolean>(false)
 	const params = useParams()
+	const session = useSession()
 
-	const routes = [
-		{
-			href: `/${params.storeId}/settings`,
-			label: 'settings',
-			active: pathname === `/${params.storeId}/settings`
-		}
-	]
-
-	const items = [
-		{
-			id: '123',
-			name: '123'
-		},
-		{
-			id: '321',
-			name: '321'
-		},
-		{
-			id: '231',
-			name: '231'
-		}
-	]
+	const onOpen = useStoreModal(state => state.onOpen)
 
 	return (
 		<>
-			<nav className='sticky top-0 border-b border-gray-200 px-6 py-2 text-sm bg-white'>
-			<div className='flex items-center gap-x-4' style={{
-				transform: `translate(${navX}px)`
-			}} >
-			<StoreSwitcher items={items} />
-			<ol className='flex gap-4'>
-					{
-						routes.map((route) => (
+			<nav className='sticky top-0 border-b border-gray-200 px-6 py-2 text-sm bg-white z-10'>
+				<div className='flex items-center gap-x-4'>
+					{session.data?.user.stores ? (
+						<StoreSwitcher data={session.data.user.stores} />
+					) : (
+						<Button onClick={() => onOpen()}>Создать магазин</Button>
+					)}
+					<ol className='flex gap-4'>
+						{pathname !== '/dashboard' && (
 							<>
-								<li aria-hidden className='text-muted-foreground'>
-									/
-								</li>
-								<Link
-									key={route.href}
-									href={route.href}
-									className={cn(
-										'text-sm font-medium transition-colors hover:text-primary',
-										route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
-									)}
+								<Button
+									onClick={() => setIsOpen(!isOpen)}
+									size='sm'
+									variant='outline'
 								>
-									{route.label}
-								</Link>
+									удалить
+								</Button>
+								<Button
+									onClick={() => setChangeOpen(!changeOpen)}
+									size='sm'
+									variant='outline'
+								>
+									настройки
+								</Button>
 							</>
-						))
-					}
-				</ol>
-			</div>
+						)}
+					</ol>
+				</div>
 			</nav>
+			<DeleteStoreDialog
+				store_id={Number(params.storeId)}
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+			/>
+			<ChangeStoreDialog
+				store_id={Number(params.storeId)}
+				isOpen={changeOpen}
+				setIsOpen={setChangeOpen}
+			/>
 		</>
 	)
 }

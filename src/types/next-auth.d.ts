@@ -1,11 +1,14 @@
 import 'next-auth'
+import { Order } from './types.dto'
 
 declare module 'next-auth' {
 	interface User {
 		email: string
 		username: string
-		is_active: boolean
-		email_verified: boolean
+		is_verified: boolean
+		role: string
+		stores: Store[]
+		orders: Order[]
 		jwt: string
 	}
 
@@ -14,8 +17,10 @@ declare module 'next-auth' {
 			id: number
 			username: string
 			email: string
-			is_active: boolean
-			email_verified: boolean
+			is_verified: boolean
+			role: string
+			stores: Store[]
+			orders: Order[]
 			jwt: string
 		}
 	}

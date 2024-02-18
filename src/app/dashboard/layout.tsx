@@ -1,8 +1,8 @@
+import { DashboardNavbar } from '@/components/dashboard-navbar'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
-import { authOptions } from '../api/auth/[...nextauth]/route'
-import { DashboardNavbar } from '@/components/dashboard-navbar'
+import { authOptions } from '../../../core/auth-options'
 
 export default async function DashboardLayout({
 	children,
@@ -11,20 +11,18 @@ export default async function DashboardLayout({
 }) {
 	const session = await getServerSession(authOptions)
 
-	if (!session?.user.email_verified || !session) {
+	if (!session?.user?.is_verified) {
 		redirect('/auth/sign-in')
 	}
 
-	/*
-	получить список всех магазинов и редирекнуть если есть магазин
-	*/
+	if (session.user.role === 'user') {
+		redirect('/')
+	}
 
 	return (
-		<>
+		<main>
 			<DashboardNavbar />
-			<section className='min-h-[200vh]'>
-				{children}
-			</section>
-		</>
+			<section className='min-h-[80vh] h-[85vh]'>{children}</section>
+		</main>
 	)
 }
