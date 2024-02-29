@@ -1,4 +1,4 @@
-import { DashboardNavbar } from '@/components/dashboard-navbar'
+import { MainNavbar } from '@/components/main-navbar'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -21,8 +21,8 @@ export default async function DashboardLayout({
 
 	return (
 		<main>
-			<DashboardNavbar />
-			<section className='min-h-[80vh] h-[85vh]'>{children}</section>
+			<MainNavbar mode='dashboard' />
+			<section className='min-h-screen h-screen'>{children}</section>
 		</main>
 	)
 }

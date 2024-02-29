@@ -62,10 +62,11 @@ export default function CartPage() {
 		if (values.phone === '' || values.address === '') {
 			return
 		}
+		setLoading(true)
 		try {
 			if (session.data?.user.is_verified) {
 				Object.entries(storeProducts).forEach(async ([storeId, products]) => {
-					const orderedProducts = products.filter(i => i.available === false)
+					const orderedProducts = products.filter(i => i.quantity > 0)
 					if (orderedProducts.length > 0) {
 						orderedProducts.map(it =>
 							removeProductFromCart(Number(storeId), it.ID)
@@ -75,9 +76,7 @@ export default function CartPage() {
 						product => product.active
 					)
 					if (activeProducts.length > 0) {
-						const parseStoreId = parseInt(storeId)
 						await createOrder({
-							store_id: parseStoreId,
 							user_id: session.data.user.id,
 							products: activeProducts,
 							phone: values.phone,
@@ -89,6 +88,8 @@ export default function CartPage() {
 			}
 		} catch (err: any) {
 			console.error(err)
+		} finally {
+			setLoading(false)
 		}
 	}
 

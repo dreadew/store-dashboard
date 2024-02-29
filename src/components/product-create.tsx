@@ -24,12 +24,9 @@ import { Label } from './ui/label'
 interface ProductCreateForm
 	extends CategoriesResponse,
 		SizesResponse,
-		ColorsResponse {
-	store_id: number
-}
+		ColorsResponse {}
 
 export const ProductCreateForm = ({
-	store_id,
 	sizes,
 	categories,
 	colors,
@@ -46,10 +43,10 @@ export const ProductCreateForm = ({
 			name: '',
 			price: '',
 			images: [],
-			store_id: String(store_id),
 			category_id: '',
 			size_id: '',
 			color_id: '',
+			quantity: 0,
 		},
 	})
 
@@ -59,7 +56,7 @@ export const ProductCreateForm = ({
 
 		formData.append('name', values.name)
 		formData.append('price', values.price)
-		formData.append('store_id', String(store_id))
+		formData.append('quantity', String(values.quantity))
 		formData.append('category_id', values.category_id)
 		formData.append('size_id', values.size_id)
 		formData.append('color_id', values.color_id)
@@ -75,7 +72,7 @@ export const ProductCreateForm = ({
 			if (session.data?.user.id) {
 				await createProduct(formData)
 				router.refresh()
-				router.push(`/dashboard/${store_id}`)
+				router.push(`/dashboard`)
 			}
 		} catch (err: any) {
 			console.log(err)
@@ -157,6 +154,14 @@ export const ProductCreateForm = ({
 						))}
 					</select>
 					<div className='flex flex-col gap-y-2'>
+						<Label className='text-sm text-gray-900'>Количество товара</Label>
+						<Input
+							disabled={loading}
+							placeholder='Количество товара'
+							{...form.register('quantity')}
+						/>
+					</div>
+					<div className='flex flex-col gap-y-2'>
 						<Label className='text-sm text-gray-900'>изображения</Label>
 						<Input
 							className='text-muted-foreground'
@@ -170,7 +175,7 @@ export const ProductCreateForm = ({
 					</div>
 					<div className='space-x-2 flex items-center justify-end'>
 						<Button
-							onClick={() => router.push(`/dashboard/${store_id}`)}
+							onClick={() => router.push(`/dashboard`)}
 							disabled={loading}
 							variant='outline'
 							type='button'

@@ -15,13 +15,11 @@ import {
 import { Input } from './ui/input'
 
 interface CreateSizeDrawerProps {
-	store_id: number
 	isOpen: boolean
 	setIsOpen: (arg: boolean) => void
 }
 
 export const CreateSizeDialog = ({
-	store_id,
 	isOpen,
 	setIsOpen,
 }: CreateSizeDrawerProps) => {
@@ -36,7 +34,7 @@ export const CreateSizeDialog = ({
 	const onSubmit = async (data: { name: string; value: string }) => {
 		try {
 			setLoading(true)
-			await createSize(data, store_id)
+			await createSize(data)
 			router.refresh()
 		} catch (err: any) {
 			console.error(err)

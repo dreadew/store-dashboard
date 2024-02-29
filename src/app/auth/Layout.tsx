@@ -13,5 +13,5 @@ export default async function AuthLayout({
 		return redirect('/')
 	}
 
-	return <section className='h-full'>{children}</section>
+	return <main className='h-full'>{children}</main>
 }

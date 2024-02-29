@@ -15,13 +15,11 @@ import {
 import { Input } from './ui/input'
 
 interface CreateColorDrawerProps {
-	store_id: number
 	isOpen: boolean
 	setIsOpen: (arg: boolean) => void
 }
 
 export const CreateColorDialog = ({
-	store_id,
 	isOpen,
 	setIsOpen,
 }: CreateColorDrawerProps) => {
@@ -36,7 +34,7 @@ export const CreateColorDialog = ({
 	const onSubmit = async (data: { name: string; value: string }) => {
 		try {
 			setLoading(true)
-			await createColor(data, store_id)
+			await createColor(data)
 			router.refresh()
 		} catch (err: any) {
 			console.error(err)

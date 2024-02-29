@@ -55,7 +55,7 @@ export const MainNavbar = ({ mode = 'default' }: MainNavbarProps) => {
 	return (
 		<header
 			className={cn(
-				'flex items-center justify-between bg-white border-b border-gray-200 px-6 py-4 text-sm',
+				'flex items-center justify-between bg-white border-b border-gray-200 px-6 py-4 text-sm z-20',
 				mode === 'dashboard' ? '' : 'sticky top-0'
 			)}
 		>
@@ -101,7 +101,7 @@ export const MainNavbar = ({ mode = 'default' }: MainNavbarProps) => {
 							<PopoverTrigger className='self-end' asChild>
 								<Button variant='outline'>Меню</Button>
 							</PopoverTrigger>
-							<PopoverContent className='fixed top-2 right-[-2.2rem] flex flex-col gap-y-2 p-3 min-w-[150px] border-gray-200 bg-white border-[1px] rounded-lg shadow-xl text-center'>
+							<PopoverContent className='z-20 fixed top-2 right-[-2.2rem] flex flex-col gap-y-2 p-3 min-w-[150px] border-gray-200 bg-white border-[1px] rounded-lg shadow-xl text-center'>
 								{routes.map((route, idx) => (
 									<Link
 										key={`main-route-${idx}`}
@@ -133,9 +133,11 @@ export const MainNavbar = ({ mode = 'default' }: MainNavbarProps) => {
 										</SignOutButton>
 									</>
 								) : (
-									<div className='flex flex-col gap-x-2'>
+									<div className='flex flex-col gap-y-2'>
 										<SignInButton className='relative'>
-											<Button size='sm'>войти в аккаунт</Button>
+											<Button className='w-full' size='sm'>
+												войти в аккаунт
+											</Button>
 										</SignInButton>
 										<SignUpButton className='relative'>
 											<Button size='sm' variant='outline'>
@@ -178,7 +180,7 @@ export const MainNavbar = ({ mode = 'default' }: MainNavbarProps) => {
 						</Button>
 						<SignOutButton className='relative'>
 							<Button size='sm' variant='outline'>
-								выйти
+								Выйти
 							</Button>
 						</SignOutButton>
 					</>

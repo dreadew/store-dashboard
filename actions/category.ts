@@ -6,42 +6,52 @@ import axios from '../core/axios'
 import { createCategorySchema, updateCategorySchema } from '../schemas'
 
 export const createCategory = async (
-	values: z.infer<typeof createCategorySchema>,
-	store_id: number
+	values: z.infer<typeof createCategorySchema>
 ): Promise<CategoryResponse> => {
-	const { data } = await axios.post('/api/category', {
-		store_id,
-		...values,
-	})
-	return data
+	try {
+		const { data } = await axios.post('/api/category', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const updateCategory = async (
-	values: z.infer<typeof updateCategorySchema>,
-	store_id: number
+	values: z.infer<typeof updateCategorySchema>
 ): Promise<CategoryResponse> => {
-	const { data } = await axios.patch('/api/category', {
-		store_id,
-		...values,
-	})
-	return data
+	try {
+		const { data } = await axios.patch('/api/category', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const deleteCategory = async (id: number): Promise<CategoryResponse> => {
-	const { data } = await axios.delete(`/api/category/${id}`)
-	return data
+	try {
+		const { data } = await axios.delete(`/api/category/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const getCategoryById = async (
 	id: number
 ): Promise<CategoryResponse> => {
-	const { data } = await axios.get(`/api/category/${id}`)
-	return data
+	try {
+		const { data } = await axios.get(`/api/category/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
-export const getCategoriesByStore = async (
-	store_id: number
-): Promise<CategoriesResponse> => {
-	const { data } = await axios.get(`/api/category/by-store/${store_id}`)
-	return data
+export const getCategories = async (): Promise<CategoriesResponse> => {
+	try {
+		const { data } = await axios.get(`/api/category`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }

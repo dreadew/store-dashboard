@@ -1,19 +1,13 @@
 'use server'
 
-import { ErrorResponse, UserResponse } from '@/types/types.dto'
+import { UserResponse } from '@/types/types.dto'
 import axios from 'axios'
 import * as z from 'zod'
 import { SignUpSchema } from '../schemas'
 
 export const signUp = async (
 	values: z.infer<typeof SignUpSchema>
-): Promise<UserResponse | ErrorResponse> => {
-	const validatedFields = SignUpSchema.safeParse(values)
-
-	if (!validatedFields.success) {
-		return { error: 'invalid fields' }
-	}
-
+): Promise<UserResponse> => {
 	try {
 		const { data } = await axios.post(
 			'http://localhost:3030/api/auth/register',
@@ -21,6 +15,6 @@ export const signUp = async (
 		)
 		return data
 	} catch (err: any) {
-		return { error: err.response.data.detail || 'invalid data' }
+		return err.response.data
 	}
 }

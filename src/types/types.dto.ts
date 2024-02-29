@@ -12,11 +12,11 @@ export type User = {
 	role: string
 	verification_code: number
 	orders: Order[]
-	stores: Store[]
 }
 
 export type UserResponse = {
 	user: User
+	errors?: string
 }
 
 export type ImageResponse = {
@@ -27,22 +27,22 @@ export type ImageResponse = {
 
 export type Category = {
 	ID: number
-	store_id: number
 	products: Product[]
 	name: string
 }
 
 export type CategoryResponse = {
 	category: Category
+	errors?: string
 }
 
 export type CategoriesResponse = {
 	categories: Category[]
+	errors?: string
 }
 
 export type Color = {
 	ID: number
-	store_id: number
 	products: Product[]
 	name: string
 	value: string
@@ -50,15 +50,16 @@ export type Color = {
 
 export type ColorResponse = {
 	color: Color
+	errors?: string
 }
 
 export type ColorsResponse = {
 	colors: Color[]
+	errors?: string
 }
 
 export type Size = {
 	ID: number
-	store_id: number
 	products: Product[]
 	name: string
 	value: string
@@ -66,30 +67,16 @@ export type Size = {
 
 export type SizeResponse = {
 	size: Size
+	errors?: string
 }
 
 export type SizesResponse = {
 	sizes: Size[]
-}
-
-export type Store = {
-	ID: number
-	user_id: number
-	products: Product[]
-	name: string
-}
-
-export type StoreResponse = {
-	store: Store
-}
-
-export type StoresResponse = {
-	stores: Store[]
+	errors?: string
 }
 
 export type Order = {
 	ID: number
-	store_id: number
 	user_id: number
 	products: Product[]
 	is_paid: boolean
@@ -107,7 +94,6 @@ export type OrdersResponse = {
 
 export type Product = {
 	ID: number
-	store_id: number
 	category_id: number
 	size_id: number
 	color_id: number
@@ -115,7 +101,7 @@ export type Product = {
 	order_id: number
 	name: string
 	price: number
-	available: boolean
+	quantity: number
 }
 
 export type ProductCart = {
@@ -124,33 +110,34 @@ export type ProductCart = {
 	price: number
 	name: string
 	active: boolean
-	available: boolean
+	quantity: number
 }
 
 export type ProductResponse = {
 	product: Product
+	errors?: string
 }
 
 export type ProductUpdateRequest = {
 	id: string
-	store_id: string
 	category_id: string
 	size_id: string
 	color_id: string
 	images: File[]
 	name: string
 	price: string
+	quantity: number
 }
 
 export type ProductRequest = Omit<ProductUpdateRequest, 'id'>
 
 export type ProductsResponse = {
 	products: Product[]
+	errors?: string
 }
 
 export type ProductExtendedResponse = {
 	ID: number
-	store_id: number
 	category_id: number
 	category_name: string
 	size_id: number
@@ -161,13 +148,12 @@ export type ProductExtendedResponse = {
 	images: ImageResponse[]
 	name: string
 	price: number
-	available: boolean
+	quantity: number
 }
 
 export type ProductsExtendedResponse = {
 	products: {
 		ID: number
-		store_id: string
 		category_id: string
 		category_name: string
 		size_id: string
@@ -178,6 +164,6 @@ export type ProductsExtendedResponse = {
 		images: ImageResponse[]
 		name: string
 		price: string
-		available: boolean
+		quantity: number
 	}[]
 }

@@ -1,5 +1,3 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -32,7 +30,6 @@ export default function Home() {
 						alt='hero-img'
 					/>
 				</div>
-				{/*session?.user ? <UserProfile session={session} /> : <AuthForm />*/}
 			</div>
 		</main>
 	)

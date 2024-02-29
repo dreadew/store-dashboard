@@ -16,13 +16,11 @@ import {
 import { Input } from './ui/input'
 
 interface CreateCategoryDrawerProps {
-	store_id: number
 	isOpen: boolean
 	setIsOpen: (arg: boolean) => void
 }
 
 export const CreateCategoryDialog = ({
-	store_id,
 	isOpen,
 	setIsOpen,
 }: CreateCategoryDrawerProps) => {
@@ -37,7 +35,7 @@ export const CreateCategoryDialog = ({
 	const onSubmit = async (data: { name: string }) => {
 		try {
 			setLoading(true)
-			await createCategory(data, store_id)
+			await createCategory(data)
 			router.refresh()
 		} catch (err: any) {
 			console.error(err)

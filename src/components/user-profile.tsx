@@ -62,14 +62,13 @@ export const UserProfile = ({ session }: { session: Session }) => {
 					</SignOutButton>
 				</CardFooter>
 			</Card>
-			<div className='p-5 h-full flex items-start lg:items-center justify-center w-full border-[1px] border-gray-200 rounded-lg'>
+			<div className='p-5 h-full flex items-center justify-center w-full border-[1px] border-gray-200 rounded-lg'>
 				{session.user.orders?.length > 0 ? (
 					<div className='w-full flex flex-col gap-y-2'>
 						<h2 className='text-gray-900 font-bold text-xl'>Список заказов</h2>
 						<Table className='w-full'>
 							<TableHeader>
 								<TableRow>
-									<TableCell>ID магазина</TableCell>
 									<TableCell>Количество товаров</TableCell>
 									<TableCell>Адрес</TableCell>
 									<TableCell>Номер телефона</TableCell>
@@ -81,7 +80,6 @@ export const UserProfile = ({ session }: { session: Session }) => {
 							<TableBody>
 								{session.user.orders.map((item, idx) => (
 									<TableRow key={`order-${idx}`}>
-										<TableCell>{item.store_id}</TableCell>
 										<TableCell>{item.products.length}</TableCell>
 										<TableCell>{item.address}</TableCell>
 										<TableCell>{item.phone}</TableCell>

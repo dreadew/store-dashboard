@@ -1,6 +1,6 @@
 'use client'
 
-import { ProductsExtendedResponse, StoreResponse } from '@/types/types.dto'
+import { ProductsExtendedResponse } from '@/types/types.dto'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { CreateCategoryDialog } from './create-category-dialog'
@@ -20,19 +20,10 @@ import {
 } from './ui/table'
 
 interface DashboardWrapperProps {
-	store_id: string
-	data: StoreResponse
 	products: ProductsExtendedResponse
 }
 
-export const DashboardWrapper = ({
-	store_id,
-	data,
-	products,
-}: DashboardWrapperProps) => {
-	/*const categoryModal = useCategoryModal()
-	const sizeModal = useSizeModal()
-	const colorModal = useColorModal()*/
+export const DashboardWrapper = ({ products }: DashboardWrapperProps) => {
 	const [categoryOpen, setCategoryOpen] = useState<boolean>(false)
 	const [colorOpen, setColorOpen] = useState<boolean>(false)
 	const [sizeOpen, setSizeOpen] = useState<boolean>(false)
@@ -51,7 +42,6 @@ export const DashboardWrapper = ({
 									<TableHead>ID</TableHead>
 									<TableHead>Название</TableHead>
 									<TableHead>Цена</TableHead>
-									<TableHead>ID магазина</TableHead>
 									<TableHead>Категория</TableHead>
 									<TableHead>Размер</TableHead>
 									<TableHead>Цвет</TableHead>
@@ -66,16 +56,13 @@ export const DashboardWrapper = ({
 										<TableCell>{item.ID}</TableCell>
 										<TableCell>{item.name}</TableCell>
 										<TableCell>{item.price}</TableCell>
-										<TableCell>{item.store_id}</TableCell>
 										<TableCell>{item.category_name}</TableCell>
 										<TableCell>{item.size_name}</TableCell>
 										<TableCell>{item.color_name}</TableCell>
-										<TableCell>{item.available ? 'Да' : 'Нет'}</TableCell>
+										<TableCell>{item.quantity} шт.</TableCell>
 										<TableCell>
 											<Button
-												onClick={() =>
-													router.push(`/dashboard/${store_id}/${item.ID}`)
-												}
+												onClick={() => router.push(`/dashboard/${item.ID}`)}
 												size='sm'
 											>
 												изменить
@@ -103,7 +90,7 @@ export const DashboardWrapper = ({
 				<BentoGrid>
 					<BentoItem
 						title='Количество товаров:'
-						data={String(data.store.products.length)}
+						data={String(products.products.length)}
 						units='шт'
 					/>
 					<Button
@@ -128,28 +115,16 @@ export const DashboardWrapper = ({
 						Добавить размер
 					</Button>
 					<Button
-						onClick={() => router.push(`/dashboard/${store_id}/create`)}
+						onClick={() => router.push(`/dashboard/create`)}
 						className='h-full col-start-1 col-end-3 p-5 lg:p-3'
 					>
 						Добавить товар
 					</Button>
 				</BentoGrid>
 			</div>
-			<CreateColorDialog
-				store_id={Number(store_id)}
-				isOpen={colorOpen}
-				setIsOpen={setColorOpen}
-			/>
-			<CreateCategoryDialog
-				store_id={Number(store_id)}
-				isOpen={categoryOpen}
-				setIsOpen={setCategoryOpen}
-			/>
-			<CreateSizeDialog
-				store_id={Number(store_id)}
-				isOpen={sizeOpen}
-				setIsOpen={setSizeOpen}
-			/>
+			<CreateColorDialog isOpen={colorOpen} setIsOpen={setColorOpen} />
+			<CreateCategoryDialog isOpen={categoryOpen} setIsOpen={setCategoryOpen} />
+			<CreateSizeDialog isOpen={sizeOpen} setIsOpen={setSizeOpen} />
 		</>
 	)
 }

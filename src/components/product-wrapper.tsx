@@ -25,7 +25,6 @@ interface ProductWrapperProps
 	extends CategoriesResponse,
 		SizesResponse,
 		ColorsResponse {
-	store_id: string
 	product: Product
 	category_name: string
 	size_name: string
@@ -33,7 +32,6 @@ interface ProductWrapperProps
 }
 
 export const ProductWrapper = ({
-	store_id,
 	product,
 	category_name,
 	size_name,
@@ -61,6 +59,7 @@ export const ProductWrapper = ({
 					<span className='text-lg text-gray-900 font-bold'>
 						Цена: {product.price}
 					</span>
+					<span>Количество: {product.quantity} шт.</span>
 				</div>
 			</div>
 			<div className='flex flex-col gap-4 justify-between'>
@@ -68,12 +67,7 @@ export const ProductWrapper = ({
 					<CarouselContent>
 						{product.images.map((item, idx) => (
 							<CarouselItem key={`carousel-item-${idx}`}>
-								<Image
-									alt=''
-									width={650}
-									height={650}
-									src={product.images[0].url}
-								/>
+								<Image alt='' width={650} height={650} src={item.url} />
 							</CarouselItem>
 						))}
 					</CarouselContent>
@@ -95,7 +89,7 @@ export const ProductWrapper = ({
 											images: product.images,
 											price: Number(product.price),
 											active: true,
-											available: product.available,
+											quantity: product.quantity,
 										})
 									}
 									size='lg'
@@ -128,7 +122,6 @@ export const ProductWrapper = ({
 							<div className='border-[1px] border-gray-200 rounded-lg p-5 h-max'>
 								<ProductUpdateForm
 									product={product}
-									store_id={Number(store_id)}
 									categories={categories}
 									colors={colors}
 									sizes={sizes}

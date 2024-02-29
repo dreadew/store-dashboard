@@ -1,32 +1,34 @@
 import { ProductWrapper } from '@/components/product-wrapper'
-import {
-	getCategoriesByStore,
-	getCategoryById,
-} from '../../../../../actions/category'
-import { getColorById, getColorsByStore } from '../../../../../actions/color'
-import { getProductById } from '../../../../../actions/product'
-import { getSizeById, getSizesByStore } from '../../../../../actions/size'
+import { getCategories, getCategoryById } from '../../../../actions/category'
+import { getColorById, getColors } from '../../../../actions/color'
+import { getProductById } from '../../../../actions/product'
+import { getSizeById, getSizes } from '../../../../actions/size'
 
 interface StoreProductPageProps {
 	params: {
-		storeId: string
 		productId: string
 	}
 }
 export default async function StoreProductPage({
 	params,
 }: StoreProductPageProps) {
-	const { product } = await getProductById(Number(params.productId))
+	const { product, errors } = await getProductById(Number(params.productId))
+	if (errors) {
+		return (
+			<section className='p-5'>
+				<h3>Товар не найден</h3>
+			</section>
+		)
+	}
 	const { category } = await getCategoryById(Number(product.category_id))
 	const { color } = await getColorById(Number(product.color_id))
 	const { size } = await getSizeById(Number(product.size_id))
-	const { categories } = await getCategoriesByStore(Number(params.storeId))
-	const { colors } = await getColorsByStore(Number(params.storeId))
-	const { sizes } = await getSizesByStore(Number(params.storeId))
+	const { categories } = await getCategories()
+	const { colors } = await getColors()
+	const { sizes } = await getSizes()
 	return (
 		<section className='p-5'>
 			<ProductWrapper
-				store_id={params.storeId}
 				categories={categories}
 				colors={colors}
 				sizes={sizes}

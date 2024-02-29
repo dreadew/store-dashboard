@@ -32,7 +32,7 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 			images: product.images,
 			price: Number(product.price),
 			active: true,
-			available: product.available,
+			quantity: product.quantity,
 		})
 	}
 
@@ -41,8 +41,11 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 	}
 
 	return (
-		<div className='bg-white' key={`product-${idx}`}>
-			<div className='mb-3'>
+		<div
+			className='h-full flex flex-col justify-between bg-white'
+			key={`product-${idx}`}
+		>
+			<div className='mb-3 flex items-center justify-center'>
 				{product.images.length > 0 ? (
 					<Carousel
 						className={cn(
@@ -53,12 +56,7 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 						<CarouselContent>
 							{product.images.map((item, idx) => (
 								<CarouselItem key={`carousel-item-${idx}`}>
-									<Image
-										alt=''
-										width={250}
-										height={250}
-										src={product.images[0].url}
-									/>
+									<Image alt='' width={250} height={250} src={item.url} />
 								</CarouselItem>
 							))}
 						</CarouselContent>
@@ -73,7 +71,7 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 			</div>
 			<div className='flex flex-col gap-2'>
 				<div className='flex flex-col gap-y-1'>
-					<Link href={`/store/${params.storeId}/${product.ID}`}>
+					<Link href={`/store/${product.ID}`}>
 						<h2 className='text-lg text-gray-900 font-bold'>{product.name}</h2>
 					</Link>
 					<p className='text-sm text-gray-500'>{product.category_name}</p>

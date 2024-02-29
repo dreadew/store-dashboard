@@ -6,6 +6,10 @@ import { SignInSchema } from '../schemas'
 export const signIn = async (
 	values: z.infer<typeof SignInSchema>
 ): Promise<UserResponse> => {
-	const { data } = await axios.post('/api/auth/login', values)
-	return data
+	try {
+		const { data } = await axios.post('/api/auth/login', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }

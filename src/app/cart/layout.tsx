@@ -6,7 +6,7 @@ interface CartLayoutProps {
 
 export default function CartLayout({ children }: CartLayoutProps) {
 	return (
-		<main>
+		<main className='min-h-screen'>
 			<MainNavbar mode='store' />
 			{children}
 		</main>

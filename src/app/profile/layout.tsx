@@ -8,7 +8,7 @@ export default function ProfilePageLayout({
 	children,
 }: ProfilePageLayoutProps) {
 	return (
-		<main>
+		<main className='h-screen'>
 			<MainNavbar mode='default' />
 			{children}
 		</main>

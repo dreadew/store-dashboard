@@ -6,40 +6,50 @@ import axios from '../core/axios'
 import { createSizeSchema, updateSizeSchema } from '../schemas'
 
 export const createSize = async (
-	values: z.infer<typeof createSizeSchema>,
-	store_id: number
+	values: z.infer<typeof createSizeSchema>
 ): Promise<SizeResponse> => {
-	const { data } = await axios.post('/api/Size', {
-		store_id,
-		...values,
-	})
-	return data
+	try {
+		const { data } = await axios.post('/api/Size', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const updateSize = async (
-	values: z.infer<typeof updateSizeSchema>,
-	store_id: number
+	values: z.infer<typeof updateSizeSchema>
 ): Promise<SizeResponse> => {
-	const { data } = await axios.patch('/api/size', {
-		store_id,
-		...values,
-	})
-	return data
+	try {
+		const { data } = await axios.patch('/api/size', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const deleteSize = async (id: number): Promise<SizeResponse> => {
-	const { data } = await axios.delete(`/api/size/${id}`)
-	return data
+	try {
+		const { data } = await axios.delete(`/api/size/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const getSizeById = async (id: number): Promise<SizeResponse> => {
-	const { data } = await axios.get(`/api/size/${id}`)
-	return data
+	try {
+		const { data } = await axios.get(`/api/size/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
-export const getSizesByStore = async (
-	store_id: number
-): Promise<SizesResponse> => {
-	const { data } = await axios.get(`/api/size/by-store/${store_id}`)
-	return data
+export const getSizes = async (): Promise<SizesResponse> => {
+	try {
+		const { data } = await axios.get(`/api/size`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }

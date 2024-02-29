@@ -6,40 +6,51 @@ import axios from '../core/axios'
 import { createColorSchema, updateColorSchema } from '../schemas'
 
 export const createColor = async (
-	values: z.infer<typeof createColorSchema>,
-	store_id: number
+	values: z.infer<typeof createColorSchema>
 ): Promise<ColorResponse> => {
-	const { data } = await axios.post('/api/color', {
-		store_id,
-		...values,
-	})
-	return data
+	try {
+		const { data } = await axios.post('/api/color', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const updateColor = async (
-	values: z.infer<typeof updateColorSchema>,
-	store_id: number
+	values: z.infer<typeof updateColorSchema>
 ): Promise<ColorResponse> => {
-	const { data } = await axios.patch('/api/color', {
-		store_id,
-		...values,
-	})
-	return data
+	try {
+		const { data } = await axios.patch('/api/color', values)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const deleteColor = async (id: number): Promise<ColorResponse> => {
-	const { data } = await axios.delete(`/api/color/${id}`)
-	return data
+	try {
+		const { data } = await axios.delete(`/api/color/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
 export const getColorById = async (id: number): Promise<ColorResponse> => {
-	const { data } = await axios.get(`/api/color/${id}`)
-	return data
+	try {
+		const { data } = await axios.get(`/api/color/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }
 
-export const getColorsByStore = async (
-	store_id: number
-): Promise<ColorsResponse> => {
-	const { data } = await axios.get(`/api/color/by-store/${store_id}`)
-	return data
+export const getColors = async (): Promise<ColorsResponse> => {
+	try {
+		const { data } = await axios.get(`/api/color`)
+		return data
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
 }

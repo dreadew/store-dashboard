@@ -63,7 +63,7 @@ export const CodeInput = ({ length, onCodeSubmit }: CodeInputProps) => {
 	}
 
 	return (
-		<form className='flex gap-x-2 justify-between'>
+		<form className='flex gap-x-5'>
 			{code.map((item, idx) => (
 				<Input
 					ref={input => {
@@ -72,7 +72,7 @@ export const CodeInput = ({ length, onCodeSubmit }: CodeInputProps) => {
 					key={idx}
 					value={item}
 					type='text'
-					className='h-12 w-12'
+					className='h-12 w-12 text-center'
 					onChange={e => handleChange(idx, e)}
 					onKeyDown={e => handleKeyDown(idx, e)}
 					onClick={() => handleClick(idx)}

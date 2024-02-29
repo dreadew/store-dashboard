@@ -13,7 +13,6 @@ export const createProductSchema = z.object({
 	name: z.string(),
 	price: z.string(),
 	category_id: z.string(),
-	store_id: z.string(),
 	size_id: z.string(),
 	color_id: z.string(),
 	images: z.string(),
@@ -28,19 +27,6 @@ export const SignUpSchema = z.object({
 	}),
 	username: z.string().min(6, {
 		message: 'username must be at least 6 characters',
-	}),
-})
-
-export const createStoreSchema = z.object({
-	name: z.string().min(4, {
-		message: 'store must be at least 4 characters',
-	}),
-})
-
-export const updateStoreSchema = z.object({
-	id: z.number(),
-	name: z.string().min(4, {
-		message: 'store must be at least 4 characters',
 	}),
 })
 

@@ -19,13 +19,11 @@ interface ProductUpdateForm
 	extends CategoriesResponse,
 		SizesResponse,
 		ColorsResponse {
-	store_id: number
 	product: Product
 }
 
 export const ProductUpdateForm = ({
 	product,
-	store_id,
 	sizes,
 	categories,
 	colors,
@@ -42,10 +40,10 @@ export const ProductUpdateForm = ({
 			name: '',
 			price: '',
 			images: [],
-			store_id: String(store_id),
 			category_id: '',
 			size_id: '',
 			color_id: '',
+			quantity: 0,
 		},
 	})
 
@@ -56,7 +54,10 @@ export const ProductUpdateForm = ({
 		formData.append('id', String(product.ID))
 		formData.append('name', values.name || product.name)
 		formData.append('price', values.price || String(product.price))
-		formData.append('store_id', String(store_id))
+		formData.append(
+			'quantity',
+			String(values.quantity) || String(product.quantity)
+		)
 		formData.append(
 			'category_id',
 			values.category_id || String(product.category_id)
@@ -74,7 +75,7 @@ export const ProductUpdateForm = ({
 			setLoading(true)
 			if (session.data?.user.id) {
 				await updateProduct(formData)
-				router.push(`/dashboard/${store_id}`)
+				router.push(`/dashboard`)
 			}
 		} catch (err: any) {
 			console.log(err)
@@ -153,6 +154,14 @@ export const ProductUpdateForm = ({
 					{...form.register('images')}
 					type='file'
 					id='fileInput'
+				/>
+			</div>
+			<div className='flex flex-col gap-y-2'>
+				<Label className='text-sm text-gray-900'>количество</Label>
+				<Input
+					disabled={loading}
+					placeholder={String(product.quantity)}
+					{...form.register('quantity')}
 				/>
 			</div>
 			<div className='space-x-2 flex items-center justify-end'>

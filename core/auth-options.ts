@@ -40,7 +40,6 @@ export const authOptions = {
 						email: data.user.email,
 						is_verified: data.user.is_verified,
 						role: data.user.role,
-						stores: data.user.stores,
 						orders: data.user.orders,
 						jwt: data.user.token,
 					}
@@ -65,7 +64,6 @@ export const authOptions = {
 					session.user.username = userDB.user.username
 					session.user.email = userDB.user.email
 					session.user.is_verified = userDB.user.is_verified
-					session.user.stores = userDB.user.stores
 					session.user.orders = userDB.user.orders
 					session.user.role = userDB.user.role
 					session.user.jwt = token.jwt
