@@ -62,7 +62,7 @@ export const UserProfile = ({ session }: { session: Session }) => {
 					</SignOutButton>
 				</CardFooter>
 			</Card>
-			<div className='p-5 h-full flex items-center justify-center w-full border-[1px] border-gray-200 rounded-lg'>
+			<div className='p-5 h-full flex justify-center w-full border-[1px] border-gray-200 rounded-lg'>
 				{session.user.orders?.length > 0 ? (
 					<div className='w-full flex flex-col gap-y-2'>
 						<h2 className='text-gray-900 font-bold text-xl'>Список заказов</h2>

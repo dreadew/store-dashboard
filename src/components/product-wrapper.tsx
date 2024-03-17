@@ -65,15 +65,14 @@ export const ProductWrapper = ({
 					<span className='text-lg text-gray-900 font-bold'>
 						Цена: {product.price}
 					</span>
-					<span>Количество: {product.quantity} шт.</span>
 				</div>
 			</div>
 			<div className='flex flex-col gap-4 justify-between'>
-				<Carousel className='max-w-[650px] self-center relative'>
+				<Carousel className='w-full self-center relative'>
 					<CarouselContent>
 						{product.images.map((item, idx) => (
 							<CarouselItem key={`carousel-item-${idx}`}>
-								<Image alt='' width={650} height={650} src={item.url} />
+								<Image alt='' width={1000} height={1000} src={item.url} />
 							</CarouselItem>
 						))}
 					</CarouselContent>
@@ -95,7 +94,6 @@ export const ProductWrapper = ({
 											images: product.images,
 											price: Number(product.price),
 											active: true,
-											quantity: product.quantity,
 										})
 									}
 									size='lg'

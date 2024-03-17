@@ -61,7 +61,9 @@ export const DashboardWrapper = ({ products }: DashboardWrapperProps) => {
 										<TableCell>{item.category_name}</TableCell>
 										<TableCell>{item.size_name}</TableCell>
 										<TableCell>{item.color_name}</TableCell>
-										<TableCell>{item.order_id}</TableCell>
+										<TableCell>
+											{item.order_id === 'null' ? 'В наличии' : 'Нет в наличии'}
+										</TableCell>
 										<TableCell>
 											<Button
 												onClick={() => router.push(`/dashboard/${item.ID}`)}

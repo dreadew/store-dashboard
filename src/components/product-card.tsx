@@ -32,7 +32,6 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 			images: product.images,
 			price: Number(product.price),
 			active: true,
-			quantity: product.quantity,
 		})
 	}
 
@@ -49,14 +48,20 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 				{product.images.length > 0 ? (
 					<Carousel
 						className={cn(
-							'w-[250px] h-[250px] max-w-[250px] relative',
+							'w-full aspect-square relative',
 							product.images.length === 0 && 'flex items-center justify-center'
 						)}
 					>
 						<CarouselContent>
 							{product.images.map((item, idx) => (
 								<CarouselItem key={`carousel-item-${idx}`}>
-									<Image alt='' width={250} height={250} src={item.url} />
+									<Image
+										className='w-full aspect-square'
+										alt=''
+										width={1000}
+										height={1000}
+										src={item.url}
+									/>
 								</CarouselItem>
 							))}
 						</CarouselContent>
@@ -64,7 +69,7 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 						<CarouselNext className='absolute top-[50%] right-0' />
 					</Carousel>
 				) : (
-					<div className='w-[250px] h-[250px] rounded-lg border-gray-200 border-[1px] flex items-center justify-center'>
+					<div className='w-full aspect-square rounded-lg border-gray-200 border-[1px] flex items-center justify-center'>
 						<h3 className='text-md font-bold text-gray-900'>Нет изображений</h3>
 					</div>
 				)}
@@ -74,6 +79,7 @@ export const ProductCard = ({ product, idx }: ProductCardProps) => {
 					<Link href={`/store/${product.ID}`}>
 						<h2 className='text-lg text-gray-900 font-bold'>{product.name}</h2>
 					</Link>
+					<p className='text-sm text-gray-500'>{product.brand_name}</p>
 					<p className='text-sm text-gray-500'>{product.category_name}</p>
 					<p className='text-sm text-gray-500'>{product.color_name}</p>
 					<p className='text-sm text-gray-500'>{product.size_name}</p>

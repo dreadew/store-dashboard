@@ -66,12 +66,6 @@ export default function CartPage() {
 		try {
 			if (session.data?.user.is_verified) {
 				Object.entries(storeProducts).forEach(async ([storeId, products]) => {
-					const orderedProducts = products.filter(i => i.quantity > 0)
-					if (orderedProducts.length > 0) {
-						orderedProducts.map(it =>
-							removeProductFromCart(Number(storeId), it.ID)
-						)
-					}
 					const activeProducts = (products || []).filter(
 						product => product.active
 					)

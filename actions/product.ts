@@ -87,6 +87,29 @@ export const getProductsByBrandId = async (
 	}
 }
 
+export const getProductsWithFilters = async (d: {
+	category_id: number | null
+	brand_id: number | null
+	size_id: number | null
+	color_id: number | null
+}): Promise<ProductsResponse> => {
+	try {
+		const params = new URLSearchParams({
+			category_id: String(d.category_id) || '',
+			brand_id: String(d.brand_id) || '',
+			size_id: String(d.size_id) || '',
+			color_id: String(d.color_id) || '',
+		})
+		const { data } = await axios.get(
+			`/api/product/all/with-filters?` + params.toString()
+		)
+		console.log(params.toString())
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
+}
+
 export const getProducts = async (): Promise<ProductsResponse> => {
 	try {
 		const { data } = await axios.get(`/api/product`)

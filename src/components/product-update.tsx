@@ -104,6 +104,20 @@ export const ProductUpdateForm = ({
 				/>
 			</div>
 			<select
+				id='brand_id'
+				{...form.register('brand_id')}
+				value={brands.find(item => String(item.ID) === brandName)?.ID}
+				onChange={e => setBrandName(e.target.value)}
+				className='border-[1px] w-full text-sm text-muted-foreground rounded-lg border-gray-200 p-3'
+			>
+				<option value=''>выберите бренд</option>
+				{brands.map((item, idx) => (
+					<option key={`brand-${idx}`} value={item.ID}>
+						{item.name}
+					</option>
+				))}
+			</select>
+			<select
 				id='category_id'
 				{...form.register('category_id')}
 				value={categories.find(item => String(item.ID) === categoryName)?.ID}
