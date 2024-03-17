@@ -42,6 +42,18 @@ export const updateCategorySchema = z.object({
 	}),
 })
 
+export const createBrandSchema = z.object({
+	name: z.string().min(4, {
+		message: 'brand must be at least 4 characters',
+	}),
+})
+
+export const updateBrandSchema = z.object({
+	name: z.string().min(4, {
+		message: 'brand must be at least 4 characters',
+	}),
+})
+
 export const createColorSchema = z.object({
 	name: z.string().min(4, {
 		message: 'color must be at least 4 characters',

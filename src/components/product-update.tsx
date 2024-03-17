@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import {
+	BrandsResponse,
 	CategoriesResponse,
 	ColorsResponse,
 	Product,
@@ -18,7 +19,8 @@ import { Label } from './ui/label'
 interface ProductUpdateForm
 	extends CategoriesResponse,
 		SizesResponse,
-		ColorsResponse {
+		ColorsResponse,
+		BrandsResponse {
 	product: Product
 }
 
@@ -27,11 +29,13 @@ export const ProductUpdateForm = ({
 	sizes,
 	categories,
 	colors,
+	brands,
 }: ProductUpdateForm) => {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [categoryName, setCategoryName] = useState<string>('')
 	const [colorName, setColorName] = useState<string>('')
 	const [sizeName, setSizeName] = useState<string>('')
+	const [brandName, setBrandName] = useState<string>('')
 	const session = useSession()
 	const router = useRouter()
 	const form = useForm<ProductUpdateRequest>({
@@ -41,9 +45,9 @@ export const ProductUpdateForm = ({
 			price: '',
 			images: [],
 			category_id: '',
+			brand_id: '',
 			size_id: '',
 			color_id: '',
-			quantity: 0,
 		},
 	})
 
@@ -54,10 +58,7 @@ export const ProductUpdateForm = ({
 		formData.append('id', String(product.ID))
 		formData.append('name', values.name || product.name)
 		formData.append('price', values.price || String(product.price))
-		formData.append(
-			'quantity',
-			String(values.quantity) || String(product.quantity)
-		)
+		formData.append('brand_id', values.brand_id || String(product.brand_id))
 		formData.append(
 			'category_id',
 			values.category_id || String(product.category_id)
@@ -117,6 +118,20 @@ export const ProductUpdateForm = ({
 				))}
 			</select>
 			<select
+				id='brand_id'
+				{...form.register('brand_id')}
+				value={brands.find(item => String(item.ID) === brandName)?.ID}
+				onChange={e => setBrandName(e.target.value)}
+				className='border-[1px] w-full text-sm text-muted-foreground rounded-lg border-gray-200 p-3'
+			>
+				<option value=''>выберите категорию</option>
+				{brands.map((item, idx) => (
+					<option key={`brand-${idx}`} value={item.ID}>
+						{item.name}
+					</option>
+				))}
+			</select>
+			<select
 				id='color_id'
 				{...form.register('color_id')}
 				value={colors.find(item => String(item.ID) === colorName)?.ID}
@@ -154,14 +169,6 @@ export const ProductUpdateForm = ({
 					{...form.register('images')}
 					type='file'
 					id='fileInput'
-				/>
-			</div>
-			<div className='flex flex-col gap-y-2'>
-				<Label className='text-sm text-gray-900'>количество</Label>
-				<Input
-					disabled={loading}
-					placeholder={String(product.quantity)}
-					{...form.register('quantity')}
 				/>
 			</div>
 			<div className='space-x-2 flex items-center justify-end'>

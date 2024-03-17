@@ -2,6 +2,7 @@ import { DashboardWrapper } from '@/components/store-page'
 import { ProductsExtendedResponse } from '@/types/types.dto'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import { getBrandById } from '../../../actions/brand'
 import { getCategoryById } from '../../../actions/category'
 import { getColorById } from '../../../actions/color'
 import { getProducts } from '../../../actions/product'
@@ -16,15 +17,6 @@ export default async function DashboardPage() {
 	}
 
 	const products = await getProducts()
-
-	if (products.errors) {
-		return (
-			<section className='p-5 h-full'>
-				<h3>Товары не найдены</h3>
-			</section>
-		)
-	}
-
 	const formattedProducts: ProductsExtendedResponse = { products: [] }
 
 	if (products.products?.length > 0) {
@@ -33,10 +25,12 @@ export default async function DashboardPage() {
 				const { category } = await getCategoryById(Number(item.category_id))
 				const { color } = await getColorById(Number(item.color_id))
 				const { size } = await getSizeById(Number(item.size_id))
+				const { brand } = await getBrandById(Number(item.brand_id))
 
 				formattedProducts.products.push({
 					ID: item.ID,
 					category_id: String(item.category_id),
+					brand_id: item.brand_id,
 					size_id: String(item.size_id),
 					color_id: String(item.color_id),
 					order_id: String(item.order_id),
@@ -44,9 +38,9 @@ export default async function DashboardPage() {
 					name: item.name,
 					price: String(item.price),
 					category_name: category.name,
+					brand_name: brand.name,
 					size_name: size.name,
 					color_name: color.name,
-					quantity: item.quantity,
 				})
 			})
 		)

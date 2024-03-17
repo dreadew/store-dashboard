@@ -41,6 +41,22 @@ export type CategoriesResponse = {
 	errors?: string
 }
 
+export type Brand = {
+	ID: number
+	products: Product[]
+	name: string
+}
+
+export type BrandResponse = {
+	brand: Brand
+	errors?: string
+}
+
+export type BrandsResponse = {
+	brands: Brand[]
+	errors?: string
+}
+
 export type Color = {
 	ID: number
 	products: Product[]
@@ -95,13 +111,13 @@ export type OrdersResponse = {
 export type Product = {
 	ID: number
 	category_id: number
+	brand_id: number
 	size_id: number
 	color_id: number
 	images: ImageResponse[]
 	order_id: number
 	name: string
 	price: number
-	quantity: number
 }
 
 export type ProductCart = {
@@ -110,7 +126,6 @@ export type ProductCart = {
 	price: number
 	name: string
 	active: boolean
-	quantity: number
 }
 
 export type ProductResponse = {
@@ -121,12 +136,12 @@ export type ProductResponse = {
 export type ProductUpdateRequest = {
 	id: string
 	category_id: string
+	brand_id: string
 	size_id: string
 	color_id: string
 	images: File[]
 	name: string
 	price: string
-	quantity: number
 }
 
 export type ProductRequest = Omit<ProductUpdateRequest, 'id'>
@@ -138,6 +153,8 @@ export type ProductsResponse = {
 
 export type ProductExtendedResponse = {
 	ID: number
+	brand_id: number
+	brand_name: string
 	category_id: number
 	category_name: string
 	size_id: number
@@ -148,12 +165,13 @@ export type ProductExtendedResponse = {
 	images: ImageResponse[]
 	name: string
 	price: number
-	quantity: number
 }
 
 export type ProductsExtendedResponse = {
 	products: {
 		ID: number
+		brand_id: number
+		brand_name: string
 		category_id: string
 		category_name: string
 		size_id: string
@@ -164,6 +182,5 @@ export type ProductsExtendedResponse = {
 		images: ImageResponse[]
 		name: string
 		price: string
-		quantity: number
 	}[]
 }

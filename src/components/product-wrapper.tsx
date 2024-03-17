@@ -1,6 +1,7 @@
 'use client'
 
 import {
+	BrandsResponse,
 	CategoriesResponse,
 	ColorsResponse,
 	Product,
@@ -24,9 +25,11 @@ import {
 interface ProductWrapperProps
 	extends CategoriesResponse,
 		SizesResponse,
-		ColorsResponse {
+		ColorsResponse,
+		BrandsResponse {
 	product: Product
 	category_name: string
+	brand_name: string
 	size_name: string
 	color_name: string
 }
@@ -34,11 +37,13 @@ interface ProductWrapperProps
 export const ProductWrapper = ({
 	product,
 	category_name,
+	brand_name,
 	size_name,
 	color_name,
 	categories,
 	colors,
 	sizes,
+	brands,
 }: ProductWrapperProps) => {
 	const params = useParams()
 	const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -52,9 +57,10 @@ export const ProductWrapper = ({
 				<div className='flex flex-col gap-y-1'>
 					<h2 className='font-bold text-3xl text-gray-900'>{product.name}</h2>
 					<span className='text-sm text-gray-500'>{category_name}</span>
-					<span className='text-sm text-gray-500'>{color_name}</span>
+					<span className='text-sm text-gray-500'>{brand_name}</span>
 				</div>
 				<div className='flex flex-col gap-y-1'>
+					<span className='text-sm text-gray-500'>{color_name}</span>
 					<span className='text-sm text-gray-500'>Размер: {size_name}</span>
 					<span className='text-lg text-gray-900 font-bold'>
 						Цена: {product.price}
@@ -125,6 +131,7 @@ export const ProductWrapper = ({
 									categories={categories}
 									colors={colors}
 									sizes={sizes}
+									brands={brands}
 								/>
 							</div>
 						)}

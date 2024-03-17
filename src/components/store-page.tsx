@@ -3,6 +3,7 @@
 import { ProductsExtendedResponse } from '@/types/types.dto'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { CreateBrandDialog } from './create-brand-dialog'
 import { CreateCategoryDialog } from './create-category-dialog'
 import { CreateColorDialog } from './create-color-dialog'
 import { CreateSizeDialog } from './create-size-dialog'
@@ -27,6 +28,7 @@ export const DashboardWrapper = ({ products }: DashboardWrapperProps) => {
 	const [categoryOpen, setCategoryOpen] = useState<boolean>(false)
 	const [colorOpen, setColorOpen] = useState<boolean>(false)
 	const [sizeOpen, setSizeOpen] = useState<boolean>(false)
+	const [brandOpen, setBrandOpen] = useState<boolean>(false)
 	const router = useRouter()
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -59,7 +61,7 @@ export const DashboardWrapper = ({ products }: DashboardWrapperProps) => {
 										<TableCell>{item.category_name}</TableCell>
 										<TableCell>{item.size_name}</TableCell>
 										<TableCell>{item.color_name}</TableCell>
-										<TableCell>{item.quantity} шт.</TableCell>
+										<TableCell>{item.order_id}</TableCell>
 										<TableCell>
 											<Button
 												onClick={() => router.push(`/dashboard/${item.ID}`)}
@@ -101,6 +103,13 @@ export const DashboardWrapper = ({ products }: DashboardWrapperProps) => {
 						Добавить категорию
 					</Button>
 					<Button
+						onClick={() => setBrandOpen(!brandOpen)}
+						variant='outline'
+						className='h-full p-5 lg:p-3'
+					>
+						Добавить бренд
+					</Button>
+					<Button
 						onClick={() => setColorOpen(!colorOpen)}
 						variant='outline'
 						className='h-full p-5 lg:p-3'
@@ -116,12 +125,13 @@ export const DashboardWrapper = ({ products }: DashboardWrapperProps) => {
 					</Button>
 					<Button
 						onClick={() => router.push(`/dashboard/create`)}
-						className='h-full col-start-1 col-end-3 p-5 lg:p-3'
+						className='h-full p-5 lg:p-3'
 					>
 						Добавить товар
 					</Button>
 				</BentoGrid>
 			</div>
+			<CreateBrandDialog isOpen={brandOpen} setIsOpen={setBrandOpen} />
 			<CreateColorDialog isOpen={colorOpen} setIsOpen={setColorOpen} />
 			<CreateCategoryDialog isOpen={categoryOpen} setIsOpen={setCategoryOpen} />
 			<CreateSizeDialog isOpen={sizeOpen} setIsOpen={setSizeOpen} />

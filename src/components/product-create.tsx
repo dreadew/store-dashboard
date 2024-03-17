@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import {
+	BrandsResponse,
 	CategoriesResponse,
 	ColorsResponse,
 	ProductRequest,
@@ -24,18 +25,21 @@ import { Label } from './ui/label'
 interface ProductCreateForm
 	extends CategoriesResponse,
 		SizesResponse,
-		ColorsResponse {}
+		ColorsResponse,
+		BrandsResponse {}
 
 export const ProductCreateForm = ({
 	sizes,
 	categories,
 	colors,
+	brands,
 }: ProductCreateForm) => {
 	const [open, setOpen] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [categoryName, setCategoryName] = useState<string>('')
 	const [colorName, setColorName] = useState<string>('')
 	const [sizeName, setSizeName] = useState<string>('')
+	const [brandName, setBrandName] = useState<string>('')
 	const session = useSession()
 	const router = useRouter()
 	const form = useForm<ProductRequest>({
@@ -44,9 +48,9 @@ export const ProductCreateForm = ({
 			price: '',
 			images: [],
 			category_id: '',
+			brand_id: '',
 			size_id: '',
 			color_id: '',
-			quantity: 0,
 		},
 	})
 
@@ -56,7 +60,7 @@ export const ProductCreateForm = ({
 
 		formData.append('name', values.name)
 		formData.append('price', values.price)
-		formData.append('quantity', String(values.quantity))
+		formData.append('brand_id', values.brand_id)
 		formData.append('category_id', values.category_id)
 		formData.append('size_id', values.size_id)
 		formData.append('color_id', values.color_id)
@@ -126,6 +130,20 @@ export const ProductCreateForm = ({
 						))}
 					</select>
 					<select
+						id='brand_id'
+						{...form.register('brand_id')}
+						value={brands.find(item => String(item.ID) === brandName)?.ID}
+						onChange={e => setBrandName(e.target.value)}
+						className='border-[1px] w-full text-sm text-muted-foreground rounded-lg border-gray-200 p-3'
+					>
+						<option value=''>выберите бренд</option>
+						{brands.map((item, idx) => (
+							<option key={`brand-${idx}`} value={item.ID}>
+								{item.name}
+							</option>
+						))}
+					</select>
+					<select
 						id='color_id'
 						{...form.register('color_id')}
 						value={colors.find(item => String(item.ID) === colorName)?.ID}
@@ -153,14 +171,6 @@ export const ProductCreateForm = ({
 							</option>
 						))}
 					</select>
-					<div className='flex flex-col gap-y-2'>
-						<Label className='text-sm text-gray-900'>Количество товара</Label>
-						<Input
-							disabled={loading}
-							placeholder='Количество товара'
-							{...form.register('quantity')}
-						/>
-					</div>
 					<div className='flex flex-col gap-y-2'>
 						<Label className='text-sm text-gray-900'>изображения</Label>
 						<Input

@@ -76,6 +76,17 @@ export const getProductBySizeId = async (
 	}
 }
 
+export const getProductsByBrandId = async (
+	id: number
+): Promise<ProductsResponse> => {
+	try {
+		const { data } = await axios.get(`/api/product/by-brand/${id}`)
+		return data
+	} catch (err: any) {
+		return err.response.data
+	}
+}
+
 export const getProducts = async (): Promise<ProductsResponse> => {
 	try {
 		const { data } = await axios.get(`/api/product`)
